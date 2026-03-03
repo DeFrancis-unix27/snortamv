@@ -3,3 +3,9 @@
 2026-03-01 01:06:58,561 | INFO | cli | Post installation completed successfully
 2026-03-01 01:10:28,946 | INFO | __main__ | Snort already installed.
 2026-03-01 01:10:28,987 | INFO | cli | Post installation completed successfully
+2026-03-02 19:05:37,625 | ERROR | modules.configuration.rule_manager | Failed to enable rule
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\SnortAMV\modules\configuration\rule_manager.py", line 72, in enable_rule
+    if action == "sources":
+       ^^^^^^
+NameError: name 'action' is not defined

@@ -196,7 +196,7 @@ def create_acc(_):
 
 
 def rule_enable_cmd(args):
-    enable_rule(args.name, dry_run=args.dry_run)
+    enable_rule(args.name, path=args.path, dry_run=args.dry_run)
 
 
 def rule_disable_cmd(args):
@@ -243,6 +243,13 @@ def main():
     )
     enable = rule_sub.add_parser("enable", help="Enable a rule")
     enable.add_argument("name", help="Name of the rule to enable")
+    enable.add_argument(
+        "--from",
+        dest="path",
+        choices=["sources", "disabled"],
+        required=True,
+        help="Where to enable the rule from",
+    )
     enable.set_defaults(func=rule_enable_cmd)
 
     disable = rule_sub.add_parser("disable", help="Disable a rule")

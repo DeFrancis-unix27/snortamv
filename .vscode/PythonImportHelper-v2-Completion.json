@@ -161,6 +161,14 @@
         "documentation": {}
     },
     {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
         "label": "shutil",
         "kind": 6,
         "isExtraImport": true,
@@ -343,6 +351,55 @@
         "documentation": {}
     },
     {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_hander",
+        "description": "modules.utilities.error_hander",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_hander",
+        "documentation": {}
+    },
+    {
         "label": "rich",
         "kind": 6,
         "isExtraImport": true,
@@ -361,30 +418,6 @@
         "documentation": {}
     },
     {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
         "label": "logging",
         "kind": 6,
         "isExtraImport": true,
@@ -400,6 +433,14 @@
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "RotatingFileHandler",
+        "importPath": "logging.handlers",
+        "description": "logging.handlers",
+        "isExtraImport": true,
+        "detail": "logging.handlers",
         "documentation": {}
     },
     {
@@ -858,7 +899,7 @@
         "kind": 2,
         "importPath": "modules.configuration.rule_manager",
         "description": "modules.configuration.rule_manager",
-        "peekOfCode": "def enable_rule(name: str, dry_run=False):\n    src = SOURCES / name\n    dst = ENABLED / name\n    if not src.exists():\n        console.print(f\"[red]Rule not found: {name}[/red]\")\n        return\n    if dry_run:\n        console.print(f\"[yellow][DRY-RUN] enable {name}[/yellow]\")\n        return\n    shutil.copy2(src, dst)",
+        "peekOfCode": "def enable_rule(name: str, path: str, dry_run=False):\n    try:\n        if path.lower() == \"sources\":\n            src = SOURCES / name\n        elif path.lower() == \"disabled\":\n            src = DISABLED / name\n        else:\n            console.print(\n                \"[red]Invalid choice. Please enter sources or disabled.[/red]\"\n            )",
         "detail": "modules.configuration.rule_manager",
         "documentation": {}
     },
@@ -867,7 +908,7 @@
         "kind": 2,
         "importPath": "modules.configuration.rule_manager",
         "description": "modules.configuration.rule_manager",
-        "peekOfCode": "def disable_rule(name: str, dry_run=False):\n    src = ENABLED / name\n    dst = DISABLED / name\n    if not src.exists():\n        console.print(f\"[red]Rule not enabled: {name}[/red]\")\n        return\n    if dry_run:\n        console.print(f\"[yellow][DRY-RUN] disable {name}[/yellow]\")\n        return\n    shutil.move(src, dst)",
+        "peekOfCode": "def disable_rule(name: str, dry_run=False):\n    src = ENABLED / name\n    dst = DISABLED / name\n    if not src.exists():\n        console.print(f\"[red]Rule not found: {name}[/red]\")\n        return\n    if dst.exists():\n        console.print(f\"[yellow]Rule already Disabled: {name}[/yellow]\")\n        return\n    if dry_run:",
         "detail": "modules.configuration.rule_manager",
         "documentation": {}
     },
@@ -886,6 +927,24 @@
         "importPath": "modules.configuration.rule_manager",
         "description": "modules.configuration.rule_manager",
         "peekOfCode": "def backup_rules():\n    ts = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n    archive = BACKUPS / f\"rules_{ts}\"\n    shutil.make_archive(str(archive), \"gztar\", RULES_DIR)\n    console.print(f\"[blue]Rules backed up → {archive}.tar.gz[/blue]\")",
+        "detail": "modules.configuration.rule_manager",
+        "documentation": {}
+    },
+    {
+        "label": "errorlog",
+        "kind": 5,
+        "importPath": "modules.configuration.rule_manager",
+        "description": "modules.configuration.rule_manager",
+        "peekOfCode": "errorlog = get_error_logger(__name__)\nlogger = get_logger(__name__)\nconsole = Console()\nROOT = Path(__file__).resolve().parents[2]\nRULES_DIR = ROOT / \"rules\"\nSOURCES = RULES_DIR / \"sources\"\nENABLED = RULES_DIR / \"enabled\"\nDISABLED = RULES_DIR / \"disabled\"\nGENERATED = RULES_DIR / \"generated\"\nBACKUPS = RULES_DIR / \"backups\"",
+        "detail": "modules.configuration.rule_manager",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "modules.configuration.rule_manager",
+        "description": "modules.configuration.rule_manager",
+        "peekOfCode": "logger = get_logger(__name__)\nconsole = Console()\nROOT = Path(__file__).resolve().parents[2]\nRULES_DIR = ROOT / \"rules\"\nSOURCES = RULES_DIR / \"sources\"\nENABLED = RULES_DIR / \"enabled\"\nDISABLED = RULES_DIR / \"disabled\"\nGENERATED = RULES_DIR / \"generated\"\nBACKUPS = RULES_DIR / \"backups\"\nfor d in [SOURCES, ENABLED, DISABLED, GENERATED, BACKUPS]:",
         "detail": "modules.configuration.rule_manager",
         "documentation": {}
     },
@@ -1124,11 +1183,38 @@
         "documentation": {}
     },
     {
-        "label": "handle_error",
+        "label": "get_error_logger",
         "kind": 2,
         "importPath": "modules.utilities.error_hander",
         "description": "modules.utilities.error_hander",
-        "peekOfCode": "def handle_error(e: Exception, context: str = \"\"):\n    print(f\"ERROR in {context}: {e}\")",
+        "peekOfCode": "def get_error_logger(name: str = APP_NAME) -> logging.Logger:\n    logger = logging.getLogger(f\"{APP_NAME}.error.{name}\")\n    if logger.handlers:\n        return logger\n    logger.setLevel(logging.ERROR)\n    formatter = logging.Formatter(\n        \"%(asctime)s | %(levelname)s | %(name)s | %(message)s\"\n    )\n    file_handler = RotatingFileHandler(\n        ERROR_LOG, maxBytes=5 * 1024 * 1024, backupCount=5",
+        "detail": "modules.utilities.error_hander",
+        "documentation": {}
+    },
+    {
+        "label": "APP_NAME",
+        "kind": 5,
+        "importPath": "modules.utilities.error_hander",
+        "description": "modules.utilities.error_hander",
+        "peekOfCode": "APP_NAME = \"snortamv\"\nOS_TYPE = platform.system().lower()\n# -------- Paths --------\nif OS_TYPE == \"windows\":\n    BASE_DIR = Path.cwd()\n    LOG_DIR = BASE_DIR / \"logStore\" / \"errors\"\nelif OS_TYPE == \"linux\":\n    LOG_DIR = Path(\"/var/log/snortamv\")\nelse:\n    print(\"Unsupported OS\")",
+        "detail": "modules.utilities.error_hander",
+        "documentation": {}
+    },
+    {
+        "label": "OS_TYPE",
+        "kind": 5,
+        "importPath": "modules.utilities.error_hander",
+        "description": "modules.utilities.error_hander",
+        "peekOfCode": "OS_TYPE = platform.system().lower()\n# -------- Paths --------\nif OS_TYPE == \"windows\":\n    BASE_DIR = Path.cwd()\n    LOG_DIR = BASE_DIR / \"logStore\" / \"errors\"\nelif OS_TYPE == \"linux\":\n    LOG_DIR = Path(\"/var/log/snortamv\")\nelse:\n    print(\"Unsupported OS\")\n    sys.exit(1)",
+        "detail": "modules.utilities.error_hander",
+        "documentation": {}
+    },
+    {
+        "label": "ERROR_LOG",
+        "kind": 5,
+        "importPath": "modules.utilities.error_hander",
+        "description": "modules.utilities.error_hander",
+        "peekOfCode": "ERROR_LOG = LOG_DIR / \"snortamv_error.log\"\n# -------- Error Logger Factory --------\ndef get_error_logger(name: str = APP_NAME) -> logging.Logger:\n    logger = logging.getLogger(f\"{APP_NAME}.error.{name}\")\n    if logger.handlers:\n        return logger\n    logger.setLevel(logging.ERROR)\n    formatter = logging.Formatter(\n        \"%(asctime)s | %(levelname)s | %(name)s | %(message)s\"\n    )",
         "detail": "modules.utilities.error_hander",
         "documentation": {}
     },
@@ -1407,7 +1493,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def rule_enable_cmd(args):\n    enable_rule(args.name, dry_run=args.dry_run)\ndef rule_disable_cmd(args):\n    disable_rule(args.name, dry_run=args.dry_run)\ndef rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    banner()\n    parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")",
+        "peekOfCode": "def rule_enable_cmd(args):\n    enable_rule(args.name, path=args.path, dry_run=args.dry_run)\ndef rule_disable_cmd(args):\n    disable_rule(args.name, dry_run=args.dry_run)\ndef rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    banner()\n    parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")",
         "detail": "cli",
         "documentation": {}
     },

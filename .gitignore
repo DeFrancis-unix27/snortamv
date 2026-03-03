@@ -44,7 +44,7 @@ accounts.json
 # TLS secrets (keep structure, ignore content)
 lock/*
 !lock/.keep
-
+rules/*
 
 # ============== Temp Files ================
 *.tmp
