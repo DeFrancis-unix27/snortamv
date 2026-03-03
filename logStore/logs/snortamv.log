@@ -9,3 +9,13 @@ Traceback (most recent call last):
     if action == "sources":
        ^^^^^^
 NameError: name 'action' is not defined
+2026-03-03 01:34:09,292 | INFO | cli | Starting decryption process
+2026-03-03 01:34:13,696 | ERROR | cli | Decryption failed
+2026-03-03 01:34:13,697 | ERROR | cli | STDOUT:
+=== Snort TLS Decrypt (Windows) ===
+Missing required tool: tshark.exe
+Install Wireshark from:
+https://www.wireshark.org/download.html
+
+2026-03-03 01:34:13,697 | ERROR | cli | STDERR:
+
