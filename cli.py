@@ -8,6 +8,7 @@ from modules.acc_managt.creat_acc import create_account_cli
 from modules.acc_managt.delete_acc import delete_account_cli
 from modules.acc_managt.update_acc import update_account_cli
 from modules.utilities.logger import get_logger
+from modules.utilities.error_handler import get_error_logger
 from modules.configuration.rule_manager import (
     disable_rule,
     enable_rule,
@@ -26,7 +27,8 @@ OS_TYPE = platform.system().lower()
 VERSION = "0.0.1"
 
 logger = get_logger(__name__)
-
+logerror = get_error_logger(__name__)
+clierrorlogger = get_error_logger("cli")
 
 # -------------------- Helper Functions --------------------
 def get_linux_distro():
@@ -101,20 +103,20 @@ def setup_cmd(_):
         try:
             result = subprocess.run([sys.executable, "post_installer.py"], check=True)
             if result.returncode != 0:
-                logger.error("Post installation failed: %s", result.stderr)
+                logerror.exception("Post installation failed: %s", result.stderr)
             else:
                 logger.info("Post installation completed successfully")
         except Exception as e:
-            logger.error("Error during post installation: %s", e)
+            logerror.exception("Error during post installation: %s", e)
     elif OS_TYPE == "windows":
         try:
             result = subprocess.run([sys.executable, "post_installer.py"], check=True)
             if result.returncode != 0:
-                logger.error("Post installation failed: %s", result.stderr)
+                logerror.exception("Post installation failed: %s", result.stderr)
             else:
                 logger.info("Post installation completed successfully")
         except Exception as e:
-            logger.error("Error during post installation: %s", e)
+            logerror.exception("Error during post installation: %s", e)
     else:
         logger.error("Unsupported OS for setup")
         return
@@ -125,9 +127,9 @@ def run_cmd(_):
         try:
             subprocess.run(["bash", "snort_auto.bash"], check=True)
         except subprocess.CalledProcessError as e:
-            logger.error("Snort run failed: %s", e)
-            logger.error("Stdout: %s", e.stdout)
-            logger.error("Stderr: %s", e.stderr)
+            logerror.exception("Snort run failed: %s", e)
+            logerror.exception("Stdout: %s", e.stdout)
+            logerror.exception("Stderr: %s", e.stderr)
             return
     elif OS_TYPE == "windows":
         try:
@@ -136,9 +138,9 @@ def run_cmd(_):
                 check=True,
             )
         except subprocess.CalledProcessError as e:
-            logger.error("Snort run failed: %s", e)
-            logger.error("Stdout: %s", e.stdout)
-            logger.error("Stderr: %s", e.stderr)
+            logerror.exception("Snort run failed: %s", e)
+            logerror.exception("Stdout: %s", e.stdout)
+            logerror.exception("Stderr: %s", e.stderr)
             return
     else:
         sys.exit("Unsupported OS")
@@ -169,8 +171,8 @@ def decrypt_cmd(_):
 
     if result.returncode != 0:
         logger.error("Decryption failed")
-        logger.error("STDOUT:\n%s", result.stdout)
-        logger.error("STDERR:\n%s", result.stderr)
+        logerror.exception("STDOUT:\n%s", result.stdout)
+        logerror.exception("STDERR:\n%s", result.stderr)
         print("[❌] Decryption failed. Check logs for details.")
         return
 
@@ -192,7 +194,7 @@ def create_acc(_):
         migrate_acc()
         logger.info("Account Created successfully")
     except Exception as e:
-        logger.error("Any error occured while creating account: %s", e)
+        logerror.exception("Any error occured while creating account: %s", e)
 
 
 def rule_enable_cmd(args):
@@ -209,81 +211,87 @@ def rule_build_cmd(args):
 
 # ---------------- CLI ----------------
 def main():
-    banner()
+    try:
+        banner()
 
-    parser = argparse.ArgumentParser(description="SnortAMV – Automated Snort Manager")
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Simulate actions without making changes",
-    )
-    sub = parser.add_subparsers(dest="command", required=True)
-
-    sub.add_parser("setup", help="Run initial setup").set_defaults(func=setup_cmd)
-    sub.add_parser("run", help="Runs the snort").set_defaults(func=run_cmd)
-    sub.add_parser("decrypt", help="decrypt the snort to be readable").set_defaults(
-        func=decrypt_cmd
-    )
-    sub.add_parser("validate", help="Validate the configuration").set_defaults(
-        func=lambda _: validate_configuration(ROOT)
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version=f"SnortAMV v{VERSION}",
-    )
-
-    rule = sub.add_parser("rule", help="add an list out rules")
-    rule_sub = rule.add_subparsers(dest="action", required=True)
-    rule_sub.add_parser("add", help="Create a local rule interactively").set_defaults(
-        func=lambda _: interactive_add_rule(ROOT)
-    )
-    rule_sub.add_parser("list", help="List rules").set_defaults(
-        func=lambda _: list_rules()
-    )
-    enable = rule_sub.add_parser("enable", help="Enable a rule")
-    enable.add_argument("name", help="Name of the rule to enable")
-    enable.add_argument(
-        "--from",
-        dest="path",
-        choices=["sources", "disabled"],
-        required=True,
-        help="Where to enable the rule from",
-    )
-    enable.set_defaults(func=rule_enable_cmd)
-
-    disable = rule_sub.add_parser("disable", help="Disable a rule")
-    disable.add_argument("name", help="Name of the rule to disable")
-    disable.set_defaults(func=rule_disable_cmd)
-
-    rule_sub.add_parser("build", help="Build up the rules").set_defaults(
-        func=rule_build_cmd
-    )
-    rule_sub.add_parser("backup", help="List local.rules").set_defaults(
-        func=lambda _: backup_rules()
-    )
-
-    acc = sub.add_parser(
-        "acc", help="Create, Delete and update project profile or users"
-    )
-    acc_sub = acc.add_subparsers(dest="action", required=True)
-    acc_sub.add_parser("create", help="Create a project user").set_defaults(
-        func=create_acc
-    )
-    acc_sub.add_parser("delete", help="Delete a project user").set_defaults(
-        func=lambda _: delete_account_cli(ROOT)
-    )
-    acc_sub.add_parser("update", help="Update a project user").set_defaults(
-        func=lambda _: update_account_cli(ROOT)
-    )
-
-    args = parser.parse_args()
-    if args.dry_run:
-        console.print(
-            "[⚠️] Dry-run mode enabled: No changes will be made to the system.",
-            style="yellow",
+        parser = argparse.ArgumentParser(description="SnortAMV – Automated Snort Manager")
+        parser.add_argument(
+            "--dry-run",
+            action="store_true",
+            help="Simulate actions without making changes",
         )
-    args.func(args)
+        sub = parser.add_subparsers(dest="command", required=True)
+
+        sub.add_parser("setup", help="Run initial setup").set_defaults(func=setup_cmd)
+        sub.add_parser("run", help="Runs the snort").set_defaults(func=run_cmd)
+        sub.add_parser("decrypt", help="decrypt the snort to be readable").set_defaults(
+            func=decrypt_cmd
+        )
+        sub.add_parser("--validate-conf", help="Validate the configuration").set_defaults(
+            func=lambda _: validate_configuration(ROOT)
+        )
+        parser.add_argument(
+            "--version",
+            action="version",
+            version=f"SnortAMV v{VERSION}",
+        )
+
+        rule = sub.add_parser("rule", help="add an list out rules")
+        rule_sub = rule.add_subparsers(dest="action", required=True)
+        rule_sub.add_parser("add", help="Create a local rule interactively").set_defaults(
+            func=lambda _: interactive_add_rule(ROOT)
+        )
+        rule_sub.add_parser("list", help="List rules").set_defaults(
+            func=lambda _: list_rules()
+        )
+        enable = rule_sub.add_parser("enable", help="Enable a rule")
+        enable.add_argument("name", help="Name of the rule to enable")
+        enable.add_argument(
+            "--from",
+            dest="path",
+            choices=["sources", "disabled"],
+            required=True,
+            help="Where to enable the rule from",
+        )
+        enable.set_defaults(func=rule_enable_cmd)
+
+        disable = rule_sub.add_parser("disable", help="Disable a rule")
+        disable.add_argument("name", help="Name of the rule to disable")
+        disable.set_defaults(func=rule_disable_cmd)
+
+        rule_sub.add_parser("build", help="Build up the rules").set_defaults(
+            func=rule_build_cmd
+        )
+        rule_sub.add_parser("backup", help="List local.rules").set_defaults(
+            func=lambda _: backup_rules()
+        )
+
+        acc = sub.add_parser(
+            "acc", help="Create, Delete and update project profile or users"
+        )
+        acc_sub = acc.add_subparsers(dest="action", required=True)
+        acc_sub.add_parser("create", help="Create a project user").set_defaults(
+            func=create_acc
+        )
+        acc_sub.add_parser("delete", help="Delete a project user").set_defaults(
+            func=lambda _: delete_account_cli(ROOT)
+        )
+        acc_sub.add_parser("update", help="Update a project user").set_defaults(
+            func=lambda _: update_account_cli(ROOT)
+        )
+
+        args = parser.parse_args()
+        if args.dry_run:
+            console.print(
+                "[⚠️] Dry-run mode enabled: No changes will be made to the system.",
+                style="yellow",
+            )
+        args.func(args)
+    except KeyboardInterrupt:
+        logger.info("Altered by The user")
+    except Exception as e:
+        clierrorlogger.exception("cli Fatal crash from the cli")
+        return "[bad] Fatal error occurred. Check logs."
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@ LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_FILE = LOG_DIR / "snortamv.log"
 
 # ---------------- Logging Setup ----------------
-LOG_LEVEL = logging.INFO  # change to DEBUG for dev
+LOG_LEVEL = logging.INFO  
 
 formatter = logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(message)s")
 

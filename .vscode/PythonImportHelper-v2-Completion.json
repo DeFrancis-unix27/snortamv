@@ -311,6 +311,118 @@
         "documentation": {}
     },
     {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_handler",
+        "documentation": {}
+    },
+    {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_handler",
+        "documentation": {}
+    },
+    {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_handler",
+        "documentation": {}
+    },
+    {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_handler",
+        "documentation": {}
+    },
+    {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_handler",
+        "documentation": {}
+    },
+    {
+        "label": "get_error_logger",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "isExtraImport": true,
+        "detail": "modules.utilities.error_handler",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
+        "label": "get_logger",
+        "importPath": "modules.utilities.logger",
+        "description": "modules.utilities.logger",
+        "isExtraImport": true,
+        "detail": "modules.utilities.logger",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -357,55 +469,6 @@
         "importPath": "time",
         "description": "time",
         "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
-        "label": "get_logger",
-        "importPath": "modules.utilities.logger",
-        "description": "modules.utilities.logger",
-        "isExtraImport": true,
-        "detail": "modules.utilities.logger",
-        "documentation": {}
-    },
-    {
-        "label": "get_error_logger",
-        "importPath": "modules.utilities.error_hander",
-        "description": "modules.utilities.error_hander",
-        "isExtraImport": true,
-        "detail": "modules.utilities.error_hander",
-        "documentation": {}
-    },
-    {
-        "label": "rich",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "rich",
-        "description": "rich",
-        "detail": "rich",
         "documentation": {}
     },
     {
@@ -845,7 +908,25 @@
         "kind": 2,
         "importPath": "modules.acc_managt.creat_acc",
         "description": "modules.acc_managt.creat_acc",
-        "peekOfCode": "def create_account_cli(root: Path):\n    username = input(\"Enter username: \").strip()\n    if get_account(username):\n        print(\"User already exists\")\n        return\n    fullname = input(\"Full name: \").strip()\n    password = input(\"Password: \").strip()\n    ok = create_account(username, fullname, password)\n    if ok:\n        print(f\"Created account: {username}\")",
+        "peekOfCode": "def create_account_cli(root: Path):\n    username = input(\"Enter username: \").strip()\n    if get_account(username):\n        print(f\"User already exists\")\n        logger.info(f\"{username} already exists\")\n        return\n    fullname = input(\"Full name: \").strip()\n    password = input(\"Password: \").strip()\n    ok = create_account(username, fullname, password)\n    if ok:",
+        "detail": "modules.acc_managt.creat_acc",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "modules.acc_managt.creat_acc",
+        "description": "modules.acc_managt.creat_acc",
+        "peekOfCode": "logger = get_logger(__name__)\nerrorLogger = get_error_logger(__name__)\ndef create_account_cli(root: Path):\n    username = input(\"Enter username: \").strip()\n    if get_account(username):\n        print(f\"User already exists\")\n        logger.info(f\"{username} already exists\")\n        return\n    fullname = input(\"Full name: \").strip()\n    password = input(\"Password: \").strip()",
+        "detail": "modules.acc_managt.creat_acc",
+        "documentation": {}
+    },
+    {
+        "label": "errorLogger",
+        "kind": 5,
+        "importPath": "modules.acc_managt.creat_acc",
+        "description": "modules.acc_managt.creat_acc",
+        "peekOfCode": "errorLogger = get_error_logger(__name__)\ndef create_account_cli(root: Path):\n    username = input(\"Enter username: \").strip()\n    if get_account(username):\n        print(f\"User already exists\")\n        logger.info(f\"{username} already exists\")\n        return\n    fullname = input(\"Full name: \").strip()\n    password = input(\"Password: \").strip()\n    ok = create_account(username, fullname, password)",
         "detail": "modules.acc_managt.creat_acc",
         "documentation": {}
     },
@@ -854,7 +935,25 @@
         "kind": 2,
         "importPath": "modules.acc_managt.delete_acc",
         "description": "modules.acc_managt.delete_acc",
-        "peekOfCode": "def delete_account_cli(root: Path):\n    username = input(\"Enter username to delete: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        return\n    password = input(\"Enter your password to confirm deletion: \").strip()\n    if not verify_password(username, password):\n        print(\"Incorrect password\")\n        return",
+        "peekOfCode": "def delete_account_cli(root: Path):\n    username = input(\"Enter username to delete: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        logger.info(f\"{username} not found \")\n        return\n    password = input(\"Enter your password to confirm deletion: \").strip()\n    if not verify_password(username, password):\n        print(\"Incorrect password\")",
+        "detail": "modules.acc_managt.delete_acc",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "modules.acc_managt.delete_acc",
+        "description": "modules.acc_managt.delete_acc",
+        "peekOfCode": "logger = get_logger(__name__)\nerrorLogger = get_error_logger(__name__)\ndef delete_account_cli(root: Path):\n    username = input(\"Enter username to delete: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        logger.info(f\"{username} not found \")\n        return\n    password = input(\"Enter your password to confirm deletion: \").strip()",
+        "detail": "modules.acc_managt.delete_acc",
+        "documentation": {}
+    },
+    {
+        "label": "errorLogger",
+        "kind": 5,
+        "importPath": "modules.acc_managt.delete_acc",
+        "description": "modules.acc_managt.delete_acc",
+        "peekOfCode": "errorLogger = get_error_logger(__name__)\ndef delete_account_cli(root: Path):\n    username = input(\"Enter username to delete: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        logger.info(f\"{username} not found \")\n        return\n    password = input(\"Enter your password to confirm deletion: \").strip()\n    if not verify_password(username, password):",
         "detail": "modules.acc_managt.delete_acc",
         "documentation": {}
     },
@@ -863,7 +962,7 @@
         "kind": 2,
         "importPath": "modules.acc_managt.migrate",
         "description": "modules.acc_managt.migrate",
-        "peekOfCode": "def migrate_acc():\n    print(\"account created \", db.migrate_from_json(Path.cwd())+1 )\nmigrate_acc()\nif __name__ == \"__main__\":\n    migrate_acc()",
+        "peekOfCode": "def migrate_acc():\n    print(db.migrate_from_json(Path.cwd()))\nmigrate_acc()\nif __name__ == \"__main__\":\n    migrate_acc()",
         "detail": "modules.acc_managt.migrate",
         "documentation": {}
     },
@@ -872,7 +971,25 @@
         "kind": 2,
         "importPath": "modules.acc_managt.update_acc",
         "description": "modules.acc_managt.update_acc",
-        "peekOfCode": "def update_account_cli(root: Path):\n    username = input(\"Enter username to update: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        return\n    password = input(\"Enter your password to confirm: \").strip()\n    if not verify_password(username, password):\n        print(\"Incorrect password.\")\n        return",
+        "peekOfCode": "def update_account_cli(root: Path):\n    username = input(\"Enter username to update: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        error_logger.exception(f\"{username} not found\")\n        return\n    password = input(\"Enter your password to confirm: \").strip()\n    if not verify_password(username, password):\n        print(\"Incorrect password.\")",
+        "detail": "modules.acc_managt.update_acc",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "modules.acc_managt.update_acc",
+        "description": "modules.acc_managt.update_acc",
+        "peekOfCode": "logger = get_logger(__name__)\nerror_logger = get_error_logger(__name__)\ndef update_account_cli(root: Path):\n    username = input(\"Enter username to update: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        error_logger.exception(f\"{username} not found\")\n        return\n    password = input(\"Enter your password to confirm: \").strip()",
+        "detail": "modules.acc_managt.update_acc",
+        "documentation": {}
+    },
+    {
+        "label": "error_logger",
+        "kind": 5,
+        "importPath": "modules.acc_managt.update_acc",
+        "description": "modules.acc_managt.update_acc",
+        "peekOfCode": "error_logger = get_error_logger(__name__)\ndef update_account_cli(root: Path):\n    username = input(\"Enter username to update: \").strip()\n    acc = get_account(username)\n    if not acc:\n        print(\"User not found\")\n        error_logger.exception(f\"{username} not found\")\n        return\n    password = input(\"Enter your password to confirm: \").strip()\n    if not verify_password(username, password):",
         "detail": "modules.acc_managt.update_acc",
         "documentation": {}
     },
@@ -908,7 +1025,7 @@
         "kind": 2,
         "importPath": "modules.configuration.rule_manager",
         "description": "modules.configuration.rule_manager",
-        "peekOfCode": "def disable_rule(name: str, dry_run=False):\n    src = ENABLED / name\n    dst = DISABLED / name\n    if not src.exists():\n        console.print(f\"[red]Rule not found: {name}[/red]\")\n        return\n    if dst.exists():\n        console.print(f\"[yellow]Rule already Disabled: {name}[/yellow]\")\n        return\n    if dry_run:",
+        "peekOfCode": "def disable_rule(name: str, dry_run=False):\n    src = ENABLED / name\n    dst = DISABLED / name\n    if not src.exists():\n        console.print(f\"[red]Rule not found: {name}[/red]\")\n        return\n    if dst.exists():\n        console.print(f\"[yellow]Rule already Disabled: {name}[/yellow]\")\n        logger.info(f\"{name} has already Disabled\")\n        return",
         "detail": "modules.configuration.rule_manager",
         "documentation": {}
     },
@@ -917,7 +1034,7 @@
         "kind": 2,
         "importPath": "modules.configuration.rule_manager",
         "description": "modules.configuration.rule_manager",
-        "peekOfCode": "def build_ruleset(dry_run=False):\n    target = GENERATED / \"snort.rules\"\n    rules = []\n    for rule_file in ENABLED.glob(\"*.rules\"):\n        rules.append(rule_file.read_text())\n    if dry_run:\n        console.print(\n            f\"[yellow][DRY-RUN] build ruleset with {len(rules)} files[/yellow]\"\n        )\n        return",
+        "peekOfCode": "def build_ruleset(dry_run=False):\n    try:\n        target = GENERATED / \"snort.rules\"\n        rules = []\n        for rule_file in ENABLED.glob(\"*.rules\"):\n            rules.append(rule_file.read_text())\n        if dry_run:\n            console.print(\n                f\"[yellow][DRY-RUN] build ruleset with {len(rules)} files[/yellow]\"\n            )",
         "detail": "modules.configuration.rule_manager",
         "documentation": {}
     },
@@ -926,7 +1043,7 @@
         "kind": 2,
         "importPath": "modules.configuration.rule_manager",
         "description": "modules.configuration.rule_manager",
-        "peekOfCode": "def backup_rules():\n    ts = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n    archive = BACKUPS / f\"rules_{ts}\"\n    shutil.make_archive(str(archive), \"gztar\", RULES_DIR)\n    console.print(f\"[blue]Rules backed up → {archive}.tar.gz[/blue]\")",
+        "peekOfCode": "def backup_rules():\n    try:\n        ts = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\n        archive = BACKUPS / f\"rules_{ts}\"\n        shutil.make_archive(str(archive), \"gztar\", RULES_DIR)\n        console.print(f\"[blue]Rules backed up → {archive}.tar.gz[/blue]\")\n        logger.info(f\"Rules backed up → {archive}.tar.gz\")\n    except KeyboardInterrupt:\n        logger.info(\"Altered by the user\")\n    except Exception as e:",
         "detail": "modules.configuration.rule_manager",
         "documentation": {}
     },
@@ -1025,7 +1142,7 @@
         "kind": 2,
         "importPath": "modules.configuration.setup_rules",
         "description": "modules.configuration.setup_rules",
-        "peekOfCode": "def create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"local.rules\"\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)\n        local_rules.write_text(\"\".join(DEFAULT_RULES))\n        console.print(f\"Created default local.rules at {local_rules}\", style=\"green\")\n    else:\n        console.print(\"local.rules already exists\", style=\"yellow\")",
+        "peekOfCode": "def create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"snort.rules\"\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)\n        local_rules.write_text(\"\".join(DEFAULT_RULES))\n        console.print(f\"Created default local.rules at {local_rules}\", style=\"green\")\n    else:\n        console.print(\"local.rules already exists\", style=\"yellow\")",
         "detail": "modules.configuration.setup_rules",
         "documentation": {}
     },
@@ -1034,7 +1151,7 @@
         "kind": 2,
         "importPath": "modules.configuration.setup_rules",
         "description": "modules.configuration.setup_rules",
-        "peekOfCode": "def interactive_add_rule(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    default_rules = rules_dir / \"generated\" / \"local.rules\"\n    filename = input(\n        \"What name do want to give to your new rules file (without .rules extension): \"\n    ).strip()\n    local_rules = rules_dir / \"sources\" / f\"{filename}.rules\"\n    # Create file with default rules only once\n    if not local_rules.exists():",
+        "peekOfCode": "def interactive_add_rule(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    filename = input(\n        \"What name do want to give to your new rules file (without .rules extension): \\n\"\n    ).strip()\n    local_rules = rules_dir / \"sources\" / f\"{filename}.rules\"\n    # Create file with default rules only once\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)",
         "detail": "modules.configuration.setup_rules",
         "documentation": {}
     },
@@ -1043,7 +1160,25 @@
         "kind": 2,
         "importPath": "modules.configuration.setup_rules",
         "description": "modules.configuration.setup_rules",
-        "peekOfCode": "def list_local_rules(root: Path):\n    local_rules = root / \"rules\" / \"local.rules\"\n    if not local_rules.exists():\n        print(\"No local.rules found. Run `python main.py setup` to create defaults.\")\n        return\n    print(local_rules.read_text())",
+        "peekOfCode": "def list_local_rules(root: Path):\n    local_rules = root / \"rules\" / \"local.rules\"\n    if not local_rules.exists():\n        print(\"No local.rules found. Run `python main.py setup` to create defaults.\")\n        logger.info(\"No local.rules found. Run `python main.py setup` to create defaults.\")\n        return\n    print(local_rules.read_text())",
+        "detail": "modules.configuration.setup_rules",
+        "documentation": {}
+    },
+    {
+        "label": "errorlog",
+        "kind": 5,
+        "importPath": "modules.configuration.setup_rules",
+        "description": "modules.configuration.setup_rules",
+        "peekOfCode": "errorlog = get_error_logger(__name__)\nlogger = get_logger(__name__)\nconsole = Console()\nDEFAULT_RULES = [\n    'alert icmp any any -> any any (msg:\"ICMP detected\"; sid:1000001; rev:1;)\\n',\n]\ndef create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"snort.rules\"",
+        "detail": "modules.configuration.setup_rules",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "modules.configuration.setup_rules",
+        "description": "modules.configuration.setup_rules",
+        "peekOfCode": "logger = get_logger(__name__)\nconsole = Console()\nDEFAULT_RULES = [\n    'alert icmp any any -> any any (msg:\"ICMP detected\"; sid:1000001; rev:1;)\\n',\n]\ndef create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"snort.rules\"\n    if not local_rules.exists():",
         "detail": "modules.configuration.setup_rules",
         "documentation": {}
     },
@@ -1052,7 +1187,7 @@
         "kind": 5,
         "importPath": "modules.configuration.setup_rules",
         "description": "modules.configuration.setup_rules",
-        "peekOfCode": "console = Console()\nDEFAULT_RULES = [\n    'alert icmp any any -> any any (msg:\"ICMP detected\"; sid:1000001; rev:1;)\\n',\n]\ndef create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"local.rules\"\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)",
+        "peekOfCode": "console = Console()\nDEFAULT_RULES = [\n    'alert icmp any any -> any any (msg:\"ICMP detected\"; sid:1000001; rev:1;)\\n',\n]\ndef create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"snort.rules\"\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)",
         "detail": "modules.configuration.setup_rules",
         "documentation": {}
     },
@@ -1061,7 +1196,7 @@
         "kind": 5,
         "importPath": "modules.configuration.setup_rules",
         "description": "modules.configuration.setup_rules",
-        "peekOfCode": "DEFAULT_RULES = [\n    'alert icmp any any -> any any (msg:\"ICMP detected\"; sid:1000001; rev:1;)\\n',\n]\ndef create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"local.rules\"\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)\n        local_rules.write_text(\"\".join(DEFAULT_RULES))",
+        "peekOfCode": "DEFAULT_RULES = [\n    'alert icmp any any -> any any (msg:\"ICMP detected\"; sid:1000001; rev:1;)\\n',\n]\ndef create_default_rules(root: Path):\n    rules_dir = root / \"rules\"\n    rules_dir.mkdir(exist_ok=True)\n    local_rules = rules_dir / \"generated\" / \"snort.rules\"\n    if not local_rules.exists():\n        local_rules.parent.mkdir(exist_ok=True)\n        local_rules.write_text(\"\".join(DEFAULT_RULES))",
         "detail": "modules.configuration.setup_rules",
         "documentation": {}
     },
@@ -1070,7 +1205,7 @@
         "kind": 2,
         "importPath": "modules.configuration.validate_conf",
         "description": "modules.configuration.validate_conf",
-        "peekOfCode": "def validate_configuration(root: Path):\n    # Simple validation: check that rules file exists and is not empty\n    rules = root / \"rules\" / \"local.rules\"\n    if not rules.exists():\n        print(\"Validation failed: local.rules missing\")\n        return False\n    content = rules.read_text().strip()\n    if not content:\n        print(\"Validation failed: local.rules is empty\")\n        return False",
+        "peekOfCode": "def validate_configuration(root: Path):\n    # Simple validation: check that rules file exists and is not empty\n    rules = root / \"rules\" / \"generated\"/\"snort.rules\"\n    if not rules.exists():\n        print(\"Validation failed: snort.rules missing\")\n        return False\n    content = rules.read_text().strip()\n    if not content:\n        print(\"Validation failed: snort.rules is empty\")\n        return False",
         "detail": "modules.configuration.validate_conf",
         "documentation": {}
     },
@@ -1185,37 +1320,37 @@
     {
         "label": "get_error_logger",
         "kind": 2,
-        "importPath": "modules.utilities.error_hander",
-        "description": "modules.utilities.error_hander",
-        "peekOfCode": "def get_error_logger(name: str = APP_NAME) -> logging.Logger:\n    logger = logging.getLogger(f\"{APP_NAME}.error.{name}\")\n    if logger.handlers:\n        return logger\n    logger.setLevel(logging.ERROR)\n    formatter = logging.Formatter(\n        \"%(asctime)s | %(levelname)s | %(name)s | %(message)s\"\n    )\n    file_handler = RotatingFileHandler(\n        ERROR_LOG, maxBytes=5 * 1024 * 1024, backupCount=5",
-        "detail": "modules.utilities.error_hander",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "peekOfCode": "def get_error_logger(name: str = APP_NAME) -> logging.Logger:\n    logger = logging.getLogger(f\"{APP_NAME}.error.{name}\")\n    if logger.handlers:\n        return logger\n    logger.setLevel(logging.ERROR)\n    formatter = logging.Formatter(\n        \"%(asctime)s | %(levelname)s | %(lineno)d | %(name)s | %(message)s\"\n    )\n    file_handler = RotatingFileHandler(\n        ERROR_LOG, maxBytes=5 * 1024 * 1024, backupCount=5",
+        "detail": "modules.utilities.error_handler",
         "documentation": {}
     },
     {
         "label": "APP_NAME",
         "kind": 5,
-        "importPath": "modules.utilities.error_hander",
-        "description": "modules.utilities.error_hander",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
         "peekOfCode": "APP_NAME = \"snortamv\"\nOS_TYPE = platform.system().lower()\n# -------- Paths --------\nif OS_TYPE == \"windows\":\n    BASE_DIR = Path.cwd()\n    LOG_DIR = BASE_DIR / \"logStore\" / \"errors\"\nelif OS_TYPE == \"linux\":\n    LOG_DIR = Path(\"/var/log/snortamv\")\nelse:\n    print(\"Unsupported OS\")",
-        "detail": "modules.utilities.error_hander",
+        "detail": "modules.utilities.error_handler",
         "documentation": {}
     },
     {
         "label": "OS_TYPE",
         "kind": 5,
-        "importPath": "modules.utilities.error_hander",
-        "description": "modules.utilities.error_hander",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
         "peekOfCode": "OS_TYPE = platform.system().lower()\n# -------- Paths --------\nif OS_TYPE == \"windows\":\n    BASE_DIR = Path.cwd()\n    LOG_DIR = BASE_DIR / \"logStore\" / \"errors\"\nelif OS_TYPE == \"linux\":\n    LOG_DIR = Path(\"/var/log/snortamv\")\nelse:\n    print(\"Unsupported OS\")\n    sys.exit(1)",
-        "detail": "modules.utilities.error_hander",
+        "detail": "modules.utilities.error_handler",
         "documentation": {}
     },
     {
         "label": "ERROR_LOG",
         "kind": 5,
-        "importPath": "modules.utilities.error_hander",
-        "description": "modules.utilities.error_hander",
-        "peekOfCode": "ERROR_LOG = LOG_DIR / \"snortamv_error.log\"\n# -------- Error Logger Factory --------\ndef get_error_logger(name: str = APP_NAME) -> logging.Logger:\n    logger = logging.getLogger(f\"{APP_NAME}.error.{name}\")\n    if logger.handlers:\n        return logger\n    logger.setLevel(logging.ERROR)\n    formatter = logging.Formatter(\n        \"%(asctime)s | %(levelname)s | %(name)s | %(message)s\"\n    )",
-        "detail": "modules.utilities.error_hander",
+        "importPath": "modules.utilities.error_handler",
+        "description": "modules.utilities.error_handler",
+        "peekOfCode": "ERROR_LOG = LOG_DIR / \"snortamv_error.log\"\n# -------- Error Logger Factory --------\ndef get_error_logger(name: str = APP_NAME) -> logging.Logger:\n    logger = logging.getLogger(f\"{APP_NAME}.error.{name}\")\n    if logger.handlers:\n        return logger\n    logger.setLevel(logging.ERROR)\n    formatter = logging.Formatter(\n        \"%(asctime)s | %(levelname)s | %(lineno)d | %(name)s | %(message)s\"\n    )",
+        "detail": "modules.utilities.error_handler",
         "documentation": {}
     },
     {
@@ -1250,7 +1385,7 @@
         "kind": 5,
         "importPath": "modules.utilities.logger",
         "description": "modules.utilities.logger",
-        "peekOfCode": "LOG_FILE = LOG_DIR / \"snortamv.log\"\n# ---------------- Logging Setup ----------------\nLOG_LEVEL = logging.INFO  # change to DEBUG for dev\nformatter = logging.Formatter(\"%(asctime)s | %(levelname)s | %(name)s | %(message)s\")\nfile_handler = RotatingFileHandler(\n    LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5  # 5MB\n)\nfile_handler.setFormatter(formatter)\nconsole_handler = logging.StreamHandler()\nconsole_handler.setFormatter(formatter)",
+        "peekOfCode": "LOG_FILE = LOG_DIR / \"snortamv.log\"\n# ---------------- Logging Setup ----------------\nLOG_LEVEL = logging.INFO  \nformatter = logging.Formatter(\"%(asctime)s | %(levelname)s | %(name)s | %(message)s\")\nfile_handler = RotatingFileHandler(\n    LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5  # 5MB\n)\nfile_handler.setFormatter(formatter)\nconsole_handler = logging.StreamHandler()\nconsole_handler.setFormatter(formatter)",
         "detail": "modules.utilities.logger",
         "documentation": {}
     },
@@ -1259,7 +1394,7 @@
         "kind": 5,
         "importPath": "modules.utilities.logger",
         "description": "modules.utilities.logger",
-        "peekOfCode": "LOG_LEVEL = logging.INFO  # change to DEBUG for dev\nformatter = logging.Formatter(\"%(asctime)s | %(levelname)s | %(name)s | %(message)s\")\nfile_handler = RotatingFileHandler(\n    LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5  # 5MB\n)\nfile_handler.setFormatter(formatter)\nconsole_handler = logging.StreamHandler()\nconsole_handler.setFormatter(formatter)\nlogging.basicConfig(\n    level=LOG_LEVEL,",
+        "peekOfCode": "LOG_LEVEL = logging.INFO  \nformatter = logging.Formatter(\"%(asctime)s | %(levelname)s | %(name)s | %(message)s\")\nfile_handler = RotatingFileHandler(\n    LOG_FILE, maxBytes=5 * 1024 * 1024, backupCount=5  # 5MB\n)\nfile_handler.setFormatter(formatter)\nconsole_handler = logging.StreamHandler()\nconsole_handler.setFormatter(formatter)\nlogging.basicConfig(\n    level=LOG_LEVEL,",
         "detail": "modules.utilities.logger",
         "documentation": {}
     },
@@ -1448,7 +1583,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def setup_cmd(_):\n    if OS_TYPE == \"linux\":\n        try:\n            result = subprocess.run([sys.executable, \"post_installer.py\"], check=True)\n            if result.returncode != 0:\n                logger.error(\"Post installation failed: %s\", result.stderr)\n            else:\n                logger.info(\"Post installation completed successfully\")\n        except Exception as e:\n            logger.error(\"Error during post installation: %s\", e)",
+        "peekOfCode": "def setup_cmd(_):\n    if OS_TYPE == \"linux\":\n        try:\n            result = subprocess.run([sys.executable, \"post_installer.py\"], check=True)\n            if result.returncode != 0:\n                logerror.exception(\"Post installation failed: %s\", result.stderr)\n            else:\n                logger.info(\"Post installation completed successfully\")\n        except Exception as e:\n            logerror.exception(\"Error during post installation: %s\", e)",
         "detail": "cli",
         "documentation": {}
     },
@@ -1457,7 +1592,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def run_cmd(_):\n    if OS_TYPE == \"linux\":\n        try:\n            subprocess.run([\"bash\", \"snort_auto.bash\"], check=True)\n        except subprocess.CalledProcessError as e:\n            logger.error(\"Snort run failed: %s\", e)\n            logger.error(\"Stdout: %s\", e.stdout)\n            logger.error(\"Stderr: %s\", e.stderr)\n            return\n    elif OS_TYPE == \"windows\":",
+        "peekOfCode": "def run_cmd(_):\n    if OS_TYPE == \"linux\":\n        try:\n            subprocess.run([\"bash\", \"snort_auto.bash\"], check=True)\n        except subprocess.CalledProcessError as e:\n            logerror.exception(\"Snort run failed: %s\", e)\n            logerror.exception(\"Stdout: %s\", e.stdout)\n            logerror.exception(\"Stderr: %s\", e.stderr)\n            return\n    elif OS_TYPE == \"windows\":",
         "detail": "cli",
         "documentation": {}
     },
@@ -1484,7 +1619,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def create_acc(_):\n    from modules.acc_managt.migrate import migrate_acc\n    try:\n        # Creates the account\n        create_account_cli(ROOT)\n        #  migrates the account to the database\n        migrate_acc()\n        logger.info(\"Account Created successfully\")\n    except Exception as e:\n        logger.error(\"Any error occured while creating account: %s\", e)",
+        "peekOfCode": "def create_acc(_):\n    from modules.acc_managt.migrate import migrate_acc\n    try:\n        # Creates the account\n        create_account_cli(ROOT)\n        #  migrates the account to the database\n        migrate_acc()\n        logger.info(\"Account Created successfully\")\n    except Exception as e:\n        logerror.exception(\"Any error occured while creating account: %s\", e)",
         "detail": "cli",
         "documentation": {}
     },
@@ -1493,7 +1628,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def rule_enable_cmd(args):\n    enable_rule(args.name, path=args.path, dry_run=args.dry_run)\ndef rule_disable_cmd(args):\n    disable_rule(args.name, dry_run=args.dry_run)\ndef rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    banner()\n    parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")",
+        "peekOfCode": "def rule_enable_cmd(args):\n    enable_rule(args.name, path=args.path, dry_run=args.dry_run)\ndef rule_disable_cmd(args):\n    disable_rule(args.name, dry_run=args.dry_run)\ndef rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    try:\n        banner()",
         "detail": "cli",
         "documentation": {}
     },
@@ -1502,7 +1637,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def rule_disable_cmd(args):\n    disable_rule(args.name, dry_run=args.dry_run)\ndef rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    banner()\n    parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")\n    parser.add_argument(\n        \"--dry-run\",",
+        "peekOfCode": "def rule_disable_cmd(args):\n    disable_rule(args.name, dry_run=args.dry_run)\ndef rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    try:\n        banner()\n        parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")\n        parser.add_argument(",
         "detail": "cli",
         "documentation": {}
     },
@@ -1511,7 +1646,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    banner()\n    parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")\n    parser.add_argument(\n        \"--dry-run\",\n        action=\"store_true\",\n        help=\"Simulate actions without making changes\",",
+        "peekOfCode": "def rule_build_cmd(args):\n    build_ruleset(dry_run=args.dry_run)\n# ---------------- CLI ----------------\ndef main():\n    try:\n        banner()\n        parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")\n        parser.add_argument(\n            \"--dry-run\",\n            action=\"store_true\",",
         "detail": "cli",
         "documentation": {}
     },
@@ -1520,7 +1655,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def main():\n    banner()\n    parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")\n    parser.add_argument(\n        \"--dry-run\",\n        action=\"store_true\",\n        help=\"Simulate actions without making changes\",\n    )\n    sub = parser.add_subparsers(dest=\"command\", required=True)\n    sub.add_parser(\"setup\", help=\"Run initial setup\").set_defaults(func=setup_cmd)",
+        "peekOfCode": "def main():\n    try:\n        banner()\n        parser = argparse.ArgumentParser(description=\"SnortAMV – Automated Snort Manager\")\n        parser.add_argument(\n            \"--dry-run\",\n            action=\"store_true\",\n            help=\"Simulate actions without making changes\",\n        )\n        sub = parser.add_subparsers(dest=\"command\", required=True)",
         "detail": "cli",
         "documentation": {}
     },
@@ -1529,7 +1664,7 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "ROOT = Path(__file__).parent.resolve()\nif str(ROOT) not in sys.path:\n    sys.path.insert(0, str(ROOT))\nconsole = Console()\nOS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")",
+        "peekOfCode": "ROOT = Path(__file__).parent.resolve()\nif str(ROOT) not in sys.path:\n    sys.path.insert(0, str(ROOT))\nconsole = Console()\nOS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------",
         "detail": "cli",
         "documentation": {}
     },
@@ -1538,7 +1673,7 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "console = Console()\nOS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}",
+        "peekOfCode": "console = Console()\nOS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():",
         "detail": "cli",
         "documentation": {}
     },
@@ -1547,7 +1682,7 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "OS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}\n    for line in os_release.read_text().splitlines():",
+        "peekOfCode": "OS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None",
         "detail": "cli",
         "documentation": {}
     },
@@ -1556,7 +1691,7 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "VERSION = \"0.0.1\"\nlogger = get_logger(__name__)\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}\n    for line in os_release.read_text().splitlines():\n        if \"=\" in line:",
+        "peekOfCode": "VERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}",
         "detail": "cli",
         "documentation": {}
     },
@@ -1565,7 +1700,25 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "logger = get_logger(__name__)\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}\n    for line in os_release.read_text().splitlines():\n        if \"=\" in line:\n            k, v = line.split(\"=\", 1)",
+        "peekOfCode": "logger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}\n    for line in os_release.read_text().splitlines():",
+        "detail": "cli",
+        "documentation": {}
+    },
+    {
+        "label": "logerror",
+        "kind": 5,
+        "importPath": "cli",
+        "description": "cli",
+        "peekOfCode": "logerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}\n    for line in os_release.read_text().splitlines():\n        if \"=\" in line:",
+        "detail": "cli",
+        "documentation": {}
+    },
+    {
+        "label": "clierrorlogger",
+        "kind": 5,
+        "importPath": "cli",
+        "description": "cli",
+        "peekOfCode": "clierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}\n    for line in os_release.read_text().splitlines():\n        if \"=\" in line:\n            k, v = line.split(\"=\", 1)",
         "detail": "cli",
         "documentation": {}
     },

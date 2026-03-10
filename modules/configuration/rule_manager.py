@@ -4,7 +4,7 @@ from datetime import datetime
 from rich.console import Console
 import time
 from modules.utilities.logger import get_logger
-from modules.utilities.error_hander import get_error_logger
+from modules.utilities.error_handler import get_error_logger
 
 errorlog = get_error_logger(__name__)
 
@@ -25,8 +25,6 @@ for d in [SOURCES, ENABLED, DISABLED, GENERATED, BACKUPS]:
 
 
 # ---------------- Core Ops ---------------- #
-
-
 def list_rules():
     console.print("\n[bold green]Enabled rules:[/bold green]")
     for f in ENABLED.glob("*.rules"):
@@ -62,10 +60,12 @@ def enable_rule(name: str, path: str, dry_run=False):
 
     if dst.exists():
         console.print(f"[yellow]Rule already enabled: {name}[/yellow]")
+        logger.info(f"{name} already enabled")
         return
 
     if dry_run:
         console.print(f"[yellow][DRY-RUN] enabling {name}[/yellow]")
+        logger.info(f"[DRY-RUN] enabling {name}")
         return
 
     try:
@@ -76,10 +76,11 @@ def enable_rule(name: str, path: str, dry_run=False):
 
         if dst.exists():
             console.print(f"[green]Enabled rule: {name}[/green]")
+            logger.info(f"{name} has been enabled")
 
     except Exception:
-        logger.exception("Failed to enable rule")
-        console.print(
+        errorlog.exception("Failed to enable rule")
+        logger.debug(
             "[red]Unable to enable rule. Please be patient, the developer is on it.[/red]"
         )
 
@@ -94,16 +95,19 @@ def disable_rule(name: str, dry_run=False):
 
     if dst.exists():
         console.print(f"[yellow]Rule already Disabled: {name}[/yellow]")
+        logger.info(f"{name} has already Disabled")
         return
 
     if dry_run:
-        console.print(f"[yellow][DRY-RUN] disabling {name}[/yellow]")
+        console.print(f"[yellow][DRY-RUN] disenabling {name}[/yellow]")
+        logger.info(f"[DRY-RUN] disenabling {name}")
         return
     try:
         shutil.move(src, dst)
 
         if dst.exists():
             console.print(f"[green]Disabled rule: {name}[/green]")
+            logger.info(f"[DRY-RUN] Disabled {name}")
 
     except Exception:
         logger.exception("Failed to disable rule")
@@ -113,25 +117,41 @@ def disable_rule(name: str, dry_run=False):
 
 
 def build_ruleset(dry_run=False):
-    target = GENERATED / "snort.rules"
-    rules = []
+    try:
+        target = GENERATED / "snort.rules"
+        rules = []
 
-    for rule_file in ENABLED.glob("*.rules"):
-        rules.append(rule_file.read_text())
+        for rule_file in ENABLED.glob("*.rules"):
+            rules.append(rule_file.read_text())
 
-    if dry_run:
-        console.print(
-            f"[yellow][DRY-RUN] build ruleset with {len(rules)} files[/yellow]"
-        )
+        if dry_run:
+            console.print(
+                f"[yellow][DRY-RUN] build ruleset with {len(rules)} files[/yellow]"
+            )
+            logger.info(f"[DRY-RUN] build ruleset with {len(rules)} files")
+            return
+
+        target.write_text("\n".join(rules))
+        console.print(f"[green]Generated ruleset → {target}[/green]")
+        logger.info(f"Generated ruleset → {target}")
+    except KeyboardInterrupt:
+        logger.info("Altered by the user")
+        
+        return "Altered by the user"
+    except Exception as e:
+        errorlog.exception("Error occured while building the rules ", e)
         return
-
-    target.write_text("\n".join(rules))
-    console.print(f"[green]Generated ruleset → {target}[/green]")
 
 
 def backup_rules():
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    archive = BACKUPS / f"rules_{ts}"
+    try:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        archive = BACKUPS / f"rules_{ts}"
 
-    shutil.make_archive(str(archive), "gztar", RULES_DIR)
-    console.print(f"[blue]Rules backed up → {archive}.tar.gz[/blue]")
+        shutil.make_archive(str(archive), "gztar", RULES_DIR)
+        console.print(f"[blue]Rules backed up → {archive}.tar.gz[/blue]")
+        logger.info(f"Rules backed up → {archive}.tar.gz")
+    except KeyboardInterrupt:
+        logger.info("Altered by the user")
+    except Exception as e:
+        errorlog.exception("an unkown error occured ",e)

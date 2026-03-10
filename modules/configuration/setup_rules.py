@@ -1,9 +1,13 @@
 """Create and manage local.rules inside the project (simple rule format)."""
 
 from pathlib import Path
-import rich
 from rich.console import Console
+from modules.utilities.logger import get_logger
+from modules.utilities.error_handler import get_error_logger
 
+errorlog = get_error_logger(__name__)
+
+logger = get_logger(__name__)
 console = Console()
 
 DEFAULT_RULES = [
@@ -14,7 +18,7 @@ DEFAULT_RULES = [
 def create_default_rules(root: Path):
     rules_dir = root / "rules"
     rules_dir.mkdir(exist_ok=True)
-    local_rules = rules_dir / "generated" / "local.rules"
+    local_rules = rules_dir / "generated" / "snort.rules"
     if not local_rules.exists():
         local_rules.parent.mkdir(exist_ok=True)
         local_rules.write_text("".join(DEFAULT_RULES))
@@ -26,25 +30,26 @@ def create_default_rules(root: Path):
 def interactive_add_rule(root: Path):
     rules_dir = root / "rules"
     rules_dir.mkdir(exist_ok=True)
-    default_rules = rules_dir / "generated" / "local.rules"
     filename = input(
-        "What name do want to give to your new rules file (without .rules extension): "
+        "What name do want to give to your new rules file (without .rules extension): \n"
     ).strip()
     local_rules = rules_dir / "sources" / f"{filename}.rules"
 
     # Create file with default rules only once
     if not local_rules.exists():
         local_rules.parent.mkdir(exist_ok=True)
-        local_rules.write_text("".join(DEFAULT_RULES))
-        console.print("local.rules created with default rules.", style="green")
+        local_rules.write_text("")
+        console.print("\t local.rules created with default rules.", style="green")
 
     # Show existing rules
     console.print("\nCurrent rules:\n", style="blue")
+    for rules in DEFAULT_RULES:
+            console.print(f" Example of how rules are written \n {rules}", style="purple")
     console.print(local_rules.read_text(), style="green")
 
-    print("\nAdd a simple alert rule (demo)")
+    print("\n Add a simple alert rule (demo)")
 
-    # --- User input ---
+    # --- User input -----------------------------------------------------------
     proto = input("Protocol (tcp/udp/icmp/ip): ").strip().lower()
     if proto not in {"tcp", "udp", "icmp", "ip"}:
         print("Invalid protocol.")
@@ -57,13 +62,13 @@ def interactive_add_rule(root: Path):
     msg = input("Message: ").strip()
 
     try:
-        sid = int(input("SID (unique integer): "))
-        rev = int(input("Rev (integer): "))
+        sid = int(input("SID (unique integer e.g. 1000001 ): "))
+        rev = int(input("Rev (integer e.g. 1): "))
     except ValueError:
         print("SID and Rev must be integers.")
         return
 
-    # --- Build rule ---
+    # --- Build rule -----------------------------------------------------------
     rule = (
         f"alert {proto} {src} {src_port} -> {dst} {dst_port} "
         f'(msg:"{msg}"; sid:{sid}; rev:{rev};)\n'
@@ -73,12 +78,13 @@ def interactive_add_rule(root: Path):
     with open(local_rules, "a") as f:
         f.write(rule)
 
-    print(f"\nRule successfully added to {local_rules}")
-
+    print(f"\n Rule successfully added to {local_rules}")
+    logger.info("Rule successfully added to {local_rules}")
 
 def list_local_rules(root: Path):
     local_rules = root / "rules" / "local.rules"
     if not local_rules.exists():
         print("No local.rules found. Run `python main.py setup` to create defaults.")
+        logger.info("No local.rules found. Run `python main.py setup` to create defaults.")
         return
     print(local_rules.read_text())

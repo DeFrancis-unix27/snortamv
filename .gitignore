@@ -7,6 +7,7 @@ __pycache__/
 env/
 venv/
 ENV/
+*.env
 
 # ============== Virtual Envs ==============
 .venv
@@ -29,10 +30,10 @@ dist/
 *~
 .DS_Store
 Thumbs.db
+sqlite.db*
 
 # ============== Runtime Logs ==============
-log/
-snort.log.*
+*logStore/*
 
 # ============== Security ==================
 .env
