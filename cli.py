@@ -24,7 +24,7 @@ if str(ROOT) not in sys.path:
 
 console = Console()
 OS_TYPE = platform.system().lower()
-VERSION = "0.0.1"
+__version__ = "0.0.2"
 
 logger = get_logger(__name__)
 logerror = get_error_logger(__name__)
@@ -181,7 +181,7 @@ def decrypt_cmd(_):
 
 
 def version_cmd(_):
-    print(f"SnortAMV v{VERSION}")
+    print(f"SnortAMV v{__version__}")
 
 
 def create_acc(_):

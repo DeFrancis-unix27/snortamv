@@ -1610,7 +1610,7 @@
         "kind": 2,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "def version_cmd(_):\n    print(f\"SnortAMV v{VERSION}\")\ndef create_acc(_):\n    from modules.acc_managt.migrate import migrate_acc\n    try:\n        # Creates the account\n        create_account_cli(ROOT)\n        #  migrates the account to the database\n        migrate_acc()\n        logger.info(\"Account Created successfully\")",
+        "peekOfCode": "def version_cmd(_):\n    print(f\"SnortAMV v{__version__}\")\ndef create_acc(_):\n    from modules.acc_managt.migrate import migrate_acc\n    try:\n        # Creates the account\n        create_account_cli(ROOT)\n        #  migrates the account to the database\n        migrate_acc()\n        logger.info(\"Account Created successfully\")",
         "detail": "cli",
         "documentation": {}
     },
@@ -1664,7 +1664,7 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "ROOT = Path(__file__).parent.resolve()\nif str(ROOT) not in sys.path:\n    sys.path.insert(0, str(ROOT))\nconsole = Console()\nOS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------",
+        "peekOfCode": "ROOT = Path(__file__).parent.resolve()\nif str(ROOT) not in sys.path:\n    sys.path.insert(0, str(ROOT))\nconsole = Console()\nOS_TYPE = platform.system().lower()\n__version__ = \"0.0.2\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------",
         "detail": "cli",
         "documentation": {}
     },
@@ -1673,7 +1673,7 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "console = Console()\nOS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():",
+        "peekOfCode": "console = Console()\nOS_TYPE = platform.system().lower()\n__version__ = \"0.0.2\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():",
         "detail": "cli",
         "documentation": {}
     },
@@ -1682,16 +1682,16 @@
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "OS_TYPE = platform.system().lower()\nVERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None",
+        "peekOfCode": "OS_TYPE = platform.system().lower()\n__version__ = \"0.0.2\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None",
         "detail": "cli",
         "documentation": {}
     },
     {
-        "label": "VERSION",
+        "label": "__version__",
         "kind": 5,
         "importPath": "cli",
         "description": "cli",
-        "peekOfCode": "VERSION = \"0.0.1\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}",
+        "peekOfCode": "__version__ = \"0.0.2\"\nlogger = get_logger(__name__)\nlogerror = get_error_logger(__name__)\nclierrorlogger = get_error_logger(\"cli\")\n# -------------------- Helper Functions --------------------\ndef get_linux_distro():\n    os_release = Path(\"/etc/os-release\")\n    if not os_release.exists():\n        return None\n    data = {}",
         "detail": "cli",
         "documentation": {}
     },
