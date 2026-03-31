@@ -5,6 +5,7 @@ import hashlib
 from typing import Optional, Dict, Any
 import platform
 import json
+from argon2 import PasswordHasher, exceptions as argon2_exceptions
 
 OS_TYPE = platform.system().lower()
 
@@ -35,8 +36,24 @@ def get_connection():
 # -------------------------
 # Password hashing
 # -------------------------
+ph = PasswordHasher()
+
+
 def hash_password(plaintext: str) -> str:
-    return hashlib.sha256(plaintext.encode("utf-8")).hexdigest()
+    """
+    Hash a plaintext password using Argon2.
+    """
+    return ph.hash(plaintext)
+
+
+def verify_password_hash(stored_hash: str, plaintext: str) -> bool:
+    """
+    Verify a plaintext password against an Argon2 hash.
+    """
+    try:
+        return ph.verify(stored_hash, plaintext)
+    except (argon2_exceptions.VerifyMismatchError, argon2_exceptions.InvalidHash):
+        return False
 
 
 # -------------------------
@@ -99,7 +116,7 @@ def verify_password(username: str, password: str) -> bool:
     conn.close()
     if not row:
         return False
-    return row["password"] == hash_password(password)
+    return verify_password_hash(row["password"], password)
 
 
 def update_account(
@@ -174,7 +191,6 @@ def migrate_from_json(project_root: Path) -> int:
         if not username or not password:
             continue
         if create_account(username, fullname, password):
-            hash_password(password)
             count += 1
 
     # Rename migrated file
