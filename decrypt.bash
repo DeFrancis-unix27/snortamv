@@ -2,114 +2,136 @@
 set -euo pipefail
 
 # ==============================
-# Resolve paths
+# PATHS
 # ==============================
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOCK_DIR="$SCRIPT_DIR/lock"
 SSLKEYLOGFILE="$LOCK_DIR/ssl.log.txt"
 
-LOG_DIR="/var/log/snort"
+LOG_DIR="/var/log/snortamv"
 OUT_DIR="/tmp/snort_decrypt"
 
-COMBINED="$OUT_DIR/snort_combined.log"
-HEXFILE="$OUT_DIR/snort_hex.txt"
-PCAP="$OUT_DIR/snort_reconstruct.pcap"
-
-# ==============================
-# Prepare directories & files
-# ==============================
 mkdir -p "$LOCK_DIR" "$OUT_DIR"
 
+# ==============================
+# COLORS
+# ==============================
+GREEN="\033[1;32m"
+RED="\033[1;31m"
+YELLOW="\033[1;33m"
+RESET="\033[0m"
+
+# ==============================
+# PREPARE KEY FILE
+# ==============================
 if [ ! -f "$SSLKEYLOGFILE" ]; then
-  touch "$SSLKEYLOGFILE"
-  chmod 600 "$SSLKEYLOGFILE"
+    touch "$SSLKEYLOGFILE"
+    chmod 600 "$SSLKEYLOGFILE"
 fi
 
-# ==============================
-# Banner & instructions
-# ==============================
-echo
-echo "========================================"
-echo "   🔐 SNORT TLS DECRYPTION TOOL"
-echo "========================================"
-echo
-echo "[*] TLS key log file:"
-echo "    $SSLKEYLOGFILE"
-echo
-echo "👉 IMPORTANT:"
-echo "   Run this BEFORE opening your browser:"
-echo "   export SSLKEYLOGFILE=\"$SSLKEYLOGFILE\""
+echo -e "${GREEN}=== TLS DECRYPTION TOOL ===${RESET}"
+echo "Key log file: $SSLKEYLOGFILE"
 echo
 
-# ---- Dependency check ----
+# ==============================
+# DEPENDENCY CHECK
+# ==============================
 if ! command -v tshark >/dev/null 2>&1; then
-  echo "[!] tshark not found"
-  echo "Install Wireshark:"
-  echo "  sudo apt install wireshark"
-  exit 1
+    echo -e "${RED}tshark not found. Install with:${RESET}"
+    echo "sudo apt install wireshark"
+    exit 1
+fi
+
+if ! command -v text2pcap >/dev/null 2>&1; then
+    echo -e "${YELLOW}text2pcap not found (optional)${RESET}"
 fi
 
 # ==============================
-# Check TLS key presence
+# CHECK TLS KEYS
 # ==============================
 if [ ! -s "$SSLKEYLOGFILE" ]; then
-  echo "⚠ TLS key log is currently empty."
-  echo "  Open your browser AFTER exporting SSLKEYLOGFILE"
-  echo "  Visit HTTPS websites, then press ENTER."
-  read -r
+    echo -e "${YELLOW}TLS key file is empty.${RESET}"
+    echo "Run this first:"
+    echo "export SSLKEYLOGFILE=\"$SSLKEYLOGFILE\""
+    echo "Then open browser and visit HTTPS sites."
+    read -rp "Press ENTER after generating traffic..."
 fi
 
 if [ ! -s "$SSLKEYLOGFILE" ]; then
-  echo "[!] Still no TLS keys detected."
-  echo "    Cannot decrypt TLS traffic yet."
-  exit 1
+    echo -e "${RED}Still no TLS keys found.${RESET}"
+    exit 1
 fi
 
-echo "[✓] TLS keys detected."
+echo -e "${GREEN}TLS keys detected.${RESET}"
 
 # ==============================
-# Select Snort log
+# SELECT FILE
 # ==============================
 echo
-echo "Available Snort log files:"
-ls -lh "$LOG_DIR" | awk '{print $9}' | grep -E 'snort' || true
+echo "Available log files:"
+ls -lh "$LOG_DIR"
 echo
-read -rp "📂 Enter Snort log filename: eg. snort.log.192729972 " filename
+
+read -rp "Enter filename (PCAP preferred): " filename
 FILEPATH="$LOG_DIR/$filename"
 
 if [ ! -f "$FILEPATH" ]; then
-  echo "[!] File not found: $FILEPATH"
-  exit 1
+    echo -e "${RED}File not found${RESET}"
+    exit 1
 fi
 
 # ==============================
-# Detect file type
+# DETECT FILE TYPE
 # ==============================
 FILETYPE=$(file "$FILEPATH")
-echo "[*] File type: $FILETYPE"
+echo "Detected type: $FILETYPE"
+
+PCAP="$OUT_DIR/output.pcap"
 
 if echo "$FILETYPE" | grep -qi "pcap"; then
-  PCAP="$FILEPATH"
+    echo -e "${GREEN}Using existing PCAP${RESET}"
+    PCAP="$FILEPATH"
 else
-  echo "[*] Converting text log → PCAP"
-  cat "$FILEPATH" > "$COMBINED"
+    echo -e "${YELLOW}WARNING: Non-PCAP input detected${RESET}"
+    echo "Attempting reconstruction (may FAIL for TLS)"
 
-  sed -nE 's/^[[:space:]]*[0-9A-Fa-f]{4}[[:space:]]+//p' "$COMBINED" \
-    | sed -E 's/[[:space:]]{2,}.*$//' > "$HEXFILE"
+    HEXFILE="$OUT_DIR/hex.txt"
 
-  text2pcap -l 1 "$HEXFILE" "$PCAP"
+    sed -nE 's/^[[:space:]]*[0-9A-Fa-f]{4}[[:space:]]+//p' "$FILEPATH" \
+        | sed -E 's/[[:space:]]{2,}.*$//' > "$HEXFILE"
+
+    text2pcap -l 1 "$HEXFILE" "$PCAP"
 fi
 
 # ==============================
-# Decrypt
+# DECRYPT
 # ==============================
 echo
-echo ">>> Showing first 200 decrypted packets"
-tshark -o tls.keylog_file:"$SSLKEYLOGFILE" -r "$PCAP" -V | head -n 200
+echo -e "${GREEN}Decrypting traffic...${RESET}"
 
+tshark \
+  -o tls.keylog_file:"$SSLKEYLOGFILE" \
+  -r "$PCAP" \
+  -Y "tls || http" \
+  -V | head -n 200
+
+# ==============================
+# OPTIONAL: CLEAN HTTP VIEW
+# ==============================
 echo
-echo "========================================"
-echo "✅ DONE"
-echo " PCAP : $PCAP"
-echo " KEYS : $SSLKEYLOGFILE"
-echo "========================================"
+echo -e "${GREEN}Extracting HTTP (if decrypted):${RESET}"
+
+tshark \
+  -o tls.keylog_file:"$SSLKEYLOGFILE" \
+  -r "$PCAP" \
+  -Y http \
+  -T fields \
+  -e ip.src -e ip.dst -e http.host -e http.request.uri
+
+# ==============================
+# DONE
+# ==============================
+echo
+echo -e "${GREEN}=== DONE ===${RESET}"
+echo "PCAP: $PCAP"
+echo "KEYS: $SSLKEYLOGFILE"

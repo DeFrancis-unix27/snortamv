@@ -98,20 +98,32 @@ echo -e "${GREEN}Using interface:${RESET} $INTERFACE"
 
 # ==============================
 # RUN SNORT (10s capture)
-# ==============================
-echo -e "${GREEN}Running Snort...${RESET}"
+# ==============================echo -e "${GREEN}Starting capture + Snort...${RESET}"
 
-$SNORT_PATH -i "$INTERFACE" -c "$SNORT_CONF" -A alert_fast -l "$LOG_DIR" &
+# Start packet capture
+PCAP_FILE="$LOG_DIR/traffic_$(date +%s).pcap"
+tcpdump -i "$INTERFACE" -w "$PCAP_FILE" >/dev/null 2>&1 &
+TCPDUMP_PID=$!
+
+# Start Snort
+$SNORT_PATH -i "$INTERFACE" -c "$SNORT_CONF" -A alert_json -l "$LOG_DIR" &
 SNORT_PID=$!
 
 sleep 10
+
+# Stop both
 kill $SNORT_PID
+kill $TCPDUMP_PID
+
 wait $SNORT_PID 2>/dev/null || true
+wait $TCPDUMP_PID 2>/dev/null || true
+
+echo -e "${GREEN}Capture complete${RESET}"
 
 # ==============================
 # READ ALERTS
 # ==============================
-ALERT_FILE="$LOG_DIR/alert_fast"
+ALERT_FILE="$LOG_DIR/alert_json"
 
 echo -e "${GREEN}Alerts:${RESET}"
 if [ -f "$ALERT_FILE" ]; then
@@ -124,7 +136,8 @@ fi
 # ==============================
 # LOG ACTIVITY
 # ==============================
-printf "%s | %s | %s\n" "$(date '+%F %T')" "$(whoami)" "$AIM" >> "$LOG_DOC"
+printf "%s | user=%s | aim=\"%s\" | interface=%s\n" \
+"$(date '+%F %T')" "$(whoami)" "$AIM" "$INTERFACE" >> "$LOG_DOC"
 echo -e "${YELLOW}Log updated${RESET}"
 
 # ==============================

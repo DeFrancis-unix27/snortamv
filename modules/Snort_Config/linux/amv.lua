@@ -54,3 +54,9 @@ ips =
 
     variables = default_variables
 }
+
+alert_json =
+{
+    file = true,
+    limit = 100,
+}
