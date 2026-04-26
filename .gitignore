@@ -30,12 +30,12 @@ dist/
 *~
 .DS_Store
 Thumbs.db
-sqlite.db*
+*sqlite.db*
 
 # ============== Runtime Logs ==============
 *logStore/*
-logStore/errors/*
-logStore/logs/*
+*logStore/logs/*
+*logStore/errors/*
 # ============== Security ==================
 .env
 .env.local

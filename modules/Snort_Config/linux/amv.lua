@@ -1,111 +1,56 @@
----------------------------------------------------------------------------
--- 1. configure defaults
----------------------------------------------------------------------------
+-- =========================
+-- 1. Defaults
+-- =========================
 
--- Network variables
 HOME_NET = 'any'
 EXTERNAL_NET = 'any'
 
--- Rule path
-RULE_PATH = './rules/generated'
+RULE_PATH = '/root/snortamv/rules/generated'
 
 include 'snort_defaults.lua'
 
----------------------------------------------------------------------------
--- 2. configure inspection
----------------------------------------------------------------------------
+-- =========================
+-- 2. Inspection
+-- =========================
 
-stream = { }
-stream_ip = { }
-stream_icmp = { }
-stream_tcp = { }
-stream_udp = { }
-stream_user = { }
-stream_file = { }
+stream = default_stream
+stream_tcp = default_stream_tcp
+stream_udp = default_stream_udp
+stream_icmp = default_stream_icmp
 
-arp_spoof = { }
-back_orifice = { }
+http_inspect = default_http_inspect
+ftp_server = default_ftp_server
+smtp = default_smtp
 dns = { }
-imap = { }
-netflow = {}
-normalizer = { }
-pop = { }
-rpc_decode = { }
-sip = { }
-socks = { }
+
 ssh = { }
 ssl = { }
-telnet = { }
 
-cip = { }
-dnp3 = { }
-iec104 = { }
-mms = { }
-modbus = { }
-opcua = { }
-s7commplus = { }
-
-dce_smb = { }
-dce_tcp = { }
-dce_udp = { }
-dce_http_proxy = { }
-dce_http_server = { }
-
-gtp_inspect = default_gtp
-port_scan = default_med_port_scan
-smtp = default_smtp
-
-ftp_server = default_ftp_server
-ftp_client = { }
-ftp_data = { }
-
-http_inspect = { }
-http2_inspect = { }
-
-file_inspect = { rules_file = 'file_magic.rules' }
-file_policy = { }
-
-js_norm = default_js_norm
-
-appid = { }
-
----------------------------------------------------------------------------
--- 3. configure bindings
----------------------------------------------------------------------------
+-- =========================
+-- 3. Bindings
+-- =========================
 
 wizard = default_wizard
 
 binder =
 {
-    { when = { proto = 'udp', ports = '53', role='server' },  use = { type = 'dns' } },
-    { when = { proto = 'tcp', ports = '53', role='server' },  use = { type = 'dns' } },
+    { when = { proto = 'udp', ports = '53', role='server' }, use = { type = 'dns' } },
+    { when = { proto = 'tcp', ports = '53', role='server' }, use = { type = 'dns' } },
 
     { use = { type = 'wizard' } }
 }
 
----------------------------------------------------------------------------
--- 5. configure detection  (FIXED SECTION)
----------------------------------------------------------------------------
-
-references = default_references
-classifications = default_classifications
+-- =========================
+-- 4. Detection
+-- =========================
 
 ips =
 {
-    enable_builtin_rules = true,
+    enable_builtin_rules = false,
 
-    -- ✅ Use your generated rules
     rules = [[
         include ]] .. RULE_PATH .. [[/snort.rules
     ]],
 
     variables = default_variables
 }
-
----------------------------------------------------------------------------
--- 8. configure tweaks
----------------------------------------------------------------------------
-
-if ( tweaks ~= nil ) then
-    include(tweaks .. '.lua')
-end
